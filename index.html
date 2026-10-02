@@ -85,12 +85,6 @@
   #servicios article,#metodologia li{padding:1.25rem}
   #servicios article h3,#metodologia li h3{margin-top:.875rem}
   #servicios article>.mt-5{margin-top:1rem}
-  #sobre-mi .aspect-square{max-width:200px}
-  #sobre-mi .grid{gap:1.75rem}
-  #aboutStats{grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
-  #aboutStats>div{padding:.85rem .75rem}
-  #aboutStats .text-3xl{font-size:1.5rem;line-height:2rem}
-  #aboutStats p{font-size:12px;line-height:1.35}
   #diagnostico .rounded-3xl{padding:1.5rem;gap:2rem}
   #contacto .grid{gap:2rem}
   #contacto .rounded-2xl.p-6{padding:1.25rem}
@@ -98,8 +92,6 @@
 @media (max-width:379px){.nav-logo{height:32px}}
 /* LinkedIn en el encabezado: en el móvil no cabe junto a los demás botones; ahí va dentro del menú */
 @media (max-width:639px){.nav-li{display:none!important}}
-/* Botón de LinkedIn bajo la foto: tamaño natural (no estirado al ancho de la columna) */
-.about-li{width:max-content}
 
 /* ---------- Escena arriba al centro de Servicios: persona apagando un fuego con manguera ----------
    SVG + CSS en grises tenues de la página. La llama titila y el agua corre hacia ella;
@@ -181,6 +173,55 @@ h1,h2{text-wrap:balance}
 .plan-price{background:#EDF7F8;border-color:#D5EBED;color:#0A5F67}
 .dark .plan-pill{background:#101D2B;border-color:#22344A;color:#E6EDF3}
 .dark .plan-price{background:#12333A;border-color:#1B4A52;color:#7FD6DC}
+
+/* ---------- "Sobre mí" con formato de perfil profesional ----------
+   Portada con formas planas, foto circular que la monta, titular, botones y secciones separadas por líneas finas. */
+.li-card{max-width:56rem;margin:0 auto;background:#fff;border:1px solid #E3E8EE;border-radius:20px;overflow:hidden;box-shadow:0 16px 40px -28px rgba(14,33,56,.35)}
+.li-cover{height:150px;background:#0E2138;position:relative}
+.li-head{position:relative;display:flow-root;padding:0 28px 24px}
+.li-avatar{width:148px;height:148px;margin-top:-82px;border-radius:9999px;border:5px solid #fff;background:#EDF7F8;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.li-avatar img{width:100%;height:100%;object-fit:cover}
+.li-avatar span{font-size:44px;font-weight:600;color:#0E7C86}
+.li-actions{position:absolute;right:28px;top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.li-btn{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;padding:8px 16px;font-size:14px;font-weight:600;transition:background-color .2s,color .2s,border-color .2s}
+.li-btn-main{background:#0E7C86;color:#fff;border:1px solid #0E7C86}
+.li-btn-main:hover{background:#0A5F67;border-color:#0A5F67}
+.li-btn-alt{background:#fff;color:#0E7C86;border:1px solid #0E7C86}
+.li-btn-alt:hover{background:#EDF7F8}
+.li-name{margin-top:14px;font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.2;color:#0B1F33}
+.li-headline{margin-top:4px;font-size:16px;line-height:1.45;color:#0B1F33}
+.li-meta{margin-top:6px;font-size:13px;color:#5B6B7B}
+.li-stats{margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.li-stat{border:1px solid #E3E8EE;border-radius:12px;padding:12px 14px;background:#F6F8FA}
+.li-stat b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;color:#0B1F33;line-height:1.1}
+.li-stat span{display:block;margin-top:2px;font-size:12px;line-height:1.35;color:#5B6B7B}
+.li-sec{border-top:1px solid #E3E8EE;padding:22px 28px}
+.li-h{font-size:17px;font-weight:600;color:#0B1F33;margin-bottom:10px}
+.li-text{font-size:15px;line-height:1.65;color:#5B6B7B}
+.li-text p+p{margin-top:10px}
+.li-chips{display:flex;flex-wrap:wrap;gap:8px}
+.li-chip{border:1px solid #E3E8EE;background:#fff;border-radius:9999px;padding:5px 12px;font-size:13px;font-weight:500;color:#0B1F33}
+@media (max-width:639px){
+  .li-cover{height:110px}
+  .li-head{padding:0 18px 20px}
+  .li-avatar{width:112px;height:112px;margin-top:-60px;border-width:4px}
+  .li-actions{position:static;justify-content:flex-start;margin-top:14px;order:5}
+  .li-name{font-size:24px}
+  .li-headline{font-size:15px}
+  .li-stat{padding:10px}
+  .li-stat b{font-size:20px}
+  .li-sec{padding:18px}
+}
+.dark .li-card{background:#101D2B;border-color:#22344A}
+.dark .li-cover{background:#16304C}
+.dark .li-avatar{border-color:#101D2B;background:#12333A}
+.dark .li-name,.dark .li-headline,.dark .li-h,.dark .li-stat b,.dark .li-chip{color:#E6EDF3}
+.dark .li-meta,.dark .li-text,.dark .li-stat span{color:#9AABBC}
+.dark .li-stat{background:#0B1621;border-color:#22344A}
+.dark .li-sec{border-color:#22344A}
+.dark .li-chip{background:#101D2B;border-color:#22344A}
+.dark .li-btn-alt{background:transparent;color:#4FC3CC;border-color:#4FC3CC}
+.dark .li-btn-alt:hover{background:#12333A}
 
 /* ---------- Modo oscuro (clase .dark en <html>, la pone el botón luna/sol) ----------
    Colores planos; textos con contraste AA sobre los fondos oscuros. */
@@ -424,7 +465,7 @@ h1,h2{text-wrap:balance}
           <span class="text-[13px] font-medium tabular-nums text-mute">05</span>
         </div>
         <h3 class="mt-5 text-[18px] font-semibold leading-snug tracking-tight">Inteligencia de negocios</h3>
-        <p class="mt-2.5 text-[14px] leading-relaxed text-mute">Convierto tus datos en decisiones: indicadores, tableros y análisis estadístico para dirigir con información, no con intuición.</p>
+        <p class="mt-2.5 text-[14px] leading-relaxed text-mute">Convierto tus datos en decisiones: indicadores, tableros y análisis estadístico para dirigir con información.</p>
         <div class="mt-5 flex flex-wrap gap-1.5">
           <span class="rounded-md bg-surface px-2 py-1 text-[12px] font-medium text-mute">Indicadores clave</span>
           <span class="rounded-md bg-surface px-2 py-1 text-[12px] font-medium text-mute">Tableros de control</span>
@@ -489,25 +530,42 @@ h1,h2{text-wrap:balance}
 <!-- ============ SOBRE MÍ (se muestra solo si completas CONFIG.sobreMi.texto) ============ -->
 <section id="sobre-mi" hidden class="scroll-mt-16 border-t border-edge bg-surface">
   <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
-    <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-      <div class="lg:col-span-4">
-        <div class="aspect-square w-full max-w-[280px] overflow-hidden rounded-3xl border border-edge bg-white">
-          <img id="aboutImg" hidden alt="Retrato de Luis Núñez" loading="lazy" class="h-full w-full object-cover" />
-          <span id="aboutMono" class="flex h-full w-full items-center justify-center text-6xl font-semibold text-brand" aria-hidden="true">LN</span>
-        </div>
-        <a data-ch="linkedin" hidden href="#" target="_blank" rel="noopener noreferrer" class="about-li icon-link mt-4 inline-flex items-center gap-2 rounded-lg border border-edge bg-white px-4 py-2.5 text-[14px] font-semibold text-ink transition-colors hover:bg-surface">
-          <svg class="ico h-[18px] w-[18px] text-brand"><use href="#i-in"/></svg>Ver mi perfil profesional
-        </a>
-      </div>
-      <div class="lg:col-span-8">
-        <span class="inline-block rounded-full border border-edge bg-white px-3 py-1 text-[12px] font-medium text-mute">Sobre mí</span>
-        <span id="aboutDemo" hidden class="demo-pill">ejemplo</span>
-        <h2 class="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Luis A. Núñez</h2>
-        <div id="aboutText" class="mt-4 max-w-2xl space-y-3 text-[16px] leading-relaxed text-mute"></div>
-        <ul id="aboutCreds" class="mt-6 flex flex-wrap gap-2"></ul>
-        <div id="aboutStats" class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3"></div>
-      </div>
+    <div class="mb-8 text-center">
+      <span class="inline-block rounded-full border border-edge bg-white px-3 py-1 text-[12px] font-medium text-mute">Sobre mí</span>
+      <span id="aboutDemo" hidden class="demo-pill">ejemplo</span>
     </div>
+    <!-- Tarjeta con formato de perfil profesional (portada, foto, titular, secciones). Estilo propio, colores de la marca -->
+    <article class="li-card" aria-labelledby="aboutName">
+      <div class="li-cover" aria-hidden="true"></div>
+      <div class="li-head">
+        <div class="li-avatar">
+          <img id="aboutImg" hidden alt="Retrato de Luis Núñez" loading="lazy" />
+          <span id="aboutMono" aria-hidden="true">LN</span>
+        </div>
+        <h2 id="aboutName" class="li-name">Luis A. Núñez</h2>
+        <p id="aboutHeadline" class="li-headline"></p>
+        <p id="aboutMeta" class="li-meta"></p>
+        <div class="li-actions">
+          <a data-ch="linkedin" hidden href="#" target="_blank" rel="noopener noreferrer" class="li-btn li-btn-main icon-link">
+            <svg class="ico h-[18px] w-[18px]"><use href="#i-in"/></svg>Ver mi perfil profesional
+          </a>
+          <a href="#contacto" class="li-btn li-btn-alt">Conversemos</a>
+        </div>
+        <div id="aboutStats" class="li-stats"></div>
+      </div>
+      <div class="li-sec">
+        <h3 class="li-h">Acerca de</h3>
+        <div id="aboutText" class="li-text"></div>
+      </div>
+      <div class="li-sec">
+        <h3 class="li-h">Licencias y certificaciones</h3>
+        <ul id="aboutCreds" class="li-chips"></ul>
+      </div>
+      <div class="li-sec" id="aboutToolsSec" hidden>
+        <h3 class="li-h">Herramientas</h3>
+        <ul id="aboutTools" class="li-chips"></ul>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -870,8 +928,11 @@ const CONFIG = {
 
   // ---- SOBRE MÍ (opcional; si 'texto' está vacío, la sección se oculta) ----
   sobreMi: {
-    texto: 'Soy ingeniero en Ciencia de Datos con más de 8 años de experiencia en gestión de riesgos, calidad y mejora de procesos, con foco en el cumplimiento normativo y en decisiones basadas en datos.\n\nHe sido Coordinador de Riesgos Institucionales, Analista Senior de Calidad y Analista de Estadística e Investigación: diseñé modelos de valoración de riesgos, lideré auditorías internas bajo ISO 9001, automaticé procesos y diseñé indicadores de cumplimiento.\n\nHoy llevo esa experiencia a empresas que quieren ordenar su operación, controlar sus riesgos y medir lo que importa.',   // Separa párrafos con una línea en blanco
-    credenciales: ['Auditor Interno ISO 9001:2015', 'ISO 37301 Compliance', 'Operational Risk Manager (OpRM)', 'Lean Six Sigma', 'Riesgos LAFT/PLD', 'Scrum Master', 'Big Data y Análisis de Datos', 'Power BI', 'SQL Server', 'Power Platform', 'R'],
+    texto: 'Soy Ingeniero en Ciencia de Datos con más de 8 años de experiencia en gestión de riesgos, calidad y mejora de procesos, con foco en el cumplimiento normativo y en decisiones basadas en datos.\n\nHe sido Coordinador de Riesgos Institucionales, Analista Senior de Calidad y Analista de Estadística e Investigación: diseñé modelos de valoración de riesgos, lideré auditorías internas bajo ISO 9001, automaticé procesos y diseñé indicadores de cumplimiento.\n\nHoy llevo esa experiencia a empresas que quieren ordenar su operación, controlar sus riesgos y medir lo que importa.',   // Separa párrafos con una línea en blanco
+    titular: 'Ciencia de Datos · Gestión de riesgos · Calidad · Mejora de Procesos',
+    ubicacion: 'Gerente General · Avenor Data Consulting',
+    credenciales: ['Auditor Interno ISO 9001:2015', 'ISO 37301 Compliance', 'Operational Risk Manager (OpRM)', 'Lean Six Sigma', 'Riesgos LAFT/PLD', 'Scrum Master', 'Big Data y Análisis de Datos'],
+    herramientas: ['Power BI', 'Excel avanzado', 'SQL Server', 'Power Platform', 'R Studio'],
     stats: [
       { valor: '8+', etiqueta: 'años de experiencia' },
       { valor: '2', etiqueta: 'normas ISO como auditor certificado' },
@@ -972,8 +1033,11 @@ function applyConfig() {
   document.querySelectorAll('[data-nav="about"]').forEach(a => a.hidden = !on);
   if (on) {
     s.texto.split(/\n\s*\n/).forEach(p => { const el = document.createElement('p'); el.textContent = p.trim(); $('aboutText').appendChild(el); });
-    (s.credenciales || []).forEach(t => { const li = document.createElement('li'); li.className = 'rounded-full border border-edge bg-white px-3 py-1.5 text-[13px] font-medium text-ink'; li.textContent = t; $('aboutCreds').appendChild(li); });
-    (s.stats || []).forEach(x => { const d = document.createElement('div'); d.className = 'rounded-2xl border border-edge bg-white p-5'; d.innerHTML = '<div class="text-3xl font-semibold tracking-tight"></div><p class="mt-1 text-[13px] text-mute"></p>'; d.children[0].textContent = x.valor; d.children[1].textContent = x.etiqueta; $('aboutStats').appendChild(d); });
+    $('aboutHeadline').textContent = s.titular || ''; $('aboutMeta').textContent = s.ubicacion || '';
+    const chip = (list, ul) => (list || []).forEach(t => { const li = document.createElement('li'); li.className = 'li-chip'; li.textContent = t; $(ul).appendChild(li); });
+    chip(s.credenciales, 'aboutCreds'); chip(s.herramientas, 'aboutTools');
+    $('aboutToolsSec').hidden = !(s.herramientas && s.herramientas.length);
+    (s.stats || []).forEach(x => { const d = document.createElement('div'); d.className = 'li-stat'; d.innerHTML = '<b></b><span></span>'; d.children[0].textContent = x.valor; d.children[1].textContent = x.etiqueta; $('aboutStats').appendChild(d); });
     if (s.foto) { $('aboutImg').src = s.foto; $('aboutImg').hidden = false; $('aboutMono').hidden = true; }
     if (isDemo('sobreMi')) {   // ejemplo visible pero marcado: nadie debe tomarlo por dato real
       $('aboutDemo').hidden = false;
