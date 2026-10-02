@@ -157,6 +157,13 @@
 .dark .client img{filter:grayscale(1) brightness(1.8);opacity:.7}
 .dark .client:hover img{filter:none;opacity:1}
 
+/* Opciones del diagnóstico: el realce al pasar el ratón solo en equipos con ratón. En el móvil el "hover" se queda
+   pegado tras tocar y hacía parecer marcada la opción de la pregunta siguiente que cae en el mismo sitio. */
+@media (hover:hover){.qopt:not(.is-sel):hover{border-color:#0E7C86;background-color:#EDF7F8}.dark .qopt:not(.is-sel):hover{background-color:#12333A}}
+
+/* Títulos con líneas equilibradas (evita una palabra sola en la última línea) */
+h1,h2{text-wrap:balance}
+
 /* Pregunta de sector (9 opciones) en dos columnas cuando hay espacio */
 @media (min-width:480px){#qOpts.qopts-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
@@ -279,7 +286,7 @@
   <div class="hero-grid mx-auto max-w-4xl px-5 pb-16 pt-32 text-center sm:px-8 lg:pb-20 lg:pt-40">
    <div class="hero-copy">
     <h1 class="hero-in text-[36px] font-semibold leading-[1.08] tracking-tight sm:text-[46px] lg:text-[54px]">
-      Organizo tu empresa para que opere con <span class="text-brand">calidad y control</span>.
+      Estandarizo tus operaciones para que <span class="text-brand">dejes de apagar fuegos</span> a diario.
     </h1>
     <p class="hero-in hero-d2 mx-auto mt-6 max-w-2xl text-[17px] leading-relaxed text-mute">
       Da el siguiente paso con tu empresa: procesos claros, riesgos bajo control y decisiones con datos.
@@ -338,7 +345,7 @@
     <div class="mx-auto max-w-2xl text-center">
       <div class="firescene" aria-hidden="true"><svg viewBox="0 0 170 66" focusable="false"><line class="fs-ground" x1="2" y1="62" x2="168" y2="62"/><path class="fs-hose" d="M45 34c-6 14-24 10-30 18s-9 9-13 10"/><rect class="fs-leg" x="19" y="39" width="5.5" height="23" rx="2.75"/><rect class="fs-leg" x="27" y="39" width="5.5" height="23" rx="2.75"/><path class="fs-body" d="M18.5 26a6 6 0 0 1 6-6h3a6 6 0 0 1 6 6v15h-15Z"/><path class="fs-arm" d="M31 25.5 44.5 29"/><path class="fs-arm2" d="M24 27.5 43 33"/><circle class="fs-head" cx="26" cy="12.5" r="6.2"/><rect class="fs-nozzle" x="42.5" y="27.2" width="10" height="5.6" rx="1.8" transform="rotate(-12 47.5 30)"/><path class="fs-water" d="M53 27.5Q88 4 127 36"/><path class="fs-water fs-water2" d="M53 29.5Q89 11 125 41"/><g class="fs-drops"><circle cx="128" cy="39" r="1.6"/><circle cx="124" cy="44" r="1.3"/><circle cx="131" cy="45" r="1.2"/></g><g class="fs-fire" transform="translate(118 12) scale(2.05)"><path class="fire-o" d="M12 2c1.2 4.2 6.5 7 6.5 14.2A6.5 6.5 0 0 1 5.5 16.2c0-3.6 2.1-5.6 3.3-8.2.6 2 1.4 3.1 2.6 3.8C11.6 8.9 11.3 5.3 12 2Z"/><path class="fire-m" d="M12.3 10c.8 2.6 3.7 4.3 3.7 8.1a4 4 0 0 1-8 0c0-2.1 1.2-3.3 1.9-4.8.4 1.1.9 1.8 1.6 2.2.1-1.9.1-3.6.8-5.5Z"/><ellipse class="fire-i" cx="12" cy="20" rx="1.9" ry="2.6"/></g></svg></div>
       <span class="inline-block rounded-full border border-edge bg-white px-3 py-1 text-[12px] font-medium text-mute">Servicios</span>
-      <h2 class="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Pasa de apagar fuegos a una gestión autónoma.</h2>
+      <h2 class="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Deja de pagar por errores operativos que se pueden prevenir.</h2>
       <p class="mt-4 text-[16px] leading-relaxed text-mute">Deja la improvisación y haz que tu negocio funcione solo.</p>
     </div>
 
@@ -677,7 +684,8 @@
         <div class="mt-2.5 h-1.5 rounded-full bg-edge" role="progressbar" aria-label="Avance del diagnóstico" aria-valuemin="0" aria-valuemax="10" aria-valuenow="1" id="qProg"><span id="qBar" class="bar-fill block h-full rounded-full bg-brand" style="width:10%"></span></div>
         <div id="qText" tabindex="-1" class="mt-7 flex min-h-[88px] items-center text-[22px] font-semibold leading-snug tracking-tight outline-none sm:text-2xl">—</div>
         <div id="qOpts" class="mt-5 grid gap-2.5"></div>
-        <div class="mt-6 flex items-center justify-between text-[12px] text-mute">
+        <button type="button" id="qNext" disabled class="mt-5 w-full rounded-lg bg-ink px-5 py-3 text-[14px] font-semibold text-white transition-colors duration-200 hover:bg-brand-dark disabled:opacity-60">Siguiente</button>
+        <div class="mt-4 flex items-center justify-between text-[12px] text-mute">
           <button type="button" id="backBtn" class="rounded-lg px-2 py-1.5 font-medium transition-colors hover:bg-surface hover:text-ink">← Anterior</button>
           <span id="qKeysTip" class="hidden sm:inline">Tip: responde con los números del teclado</span>
         </div>
@@ -795,55 +803,54 @@ const CONFIG = {
   formExtra: {},
 
   // ---- PRECIO Y DURACIÓN DEL PLAN RECOMENDADO (se calculan dentro del diagnóstico) ----
-  // REGLA: el servicio es el del área más débil del test (si todo está parejo: Procesos; si la empresa ya está madura: Calidad).
-  // FÓRMULA:
-  //   Precio "desde" = Base del servicio × Tamaño × Sedes × Sector × Madurez   (redondeado; nunca menos que 'minimo')
-  //   Semanas        = Semanas base del servicio × Tamaño(tiempo) × Sedes(tiempo)   (rango mínimo a máximo, redondeado)
-  // CRITERIOS: los cuatro factores salen de lo que responde el cliente (3 datos de su empresa + su puntaje del test).
+  // REGLA: el servicio principal es el del área más débil (si todo está parejo: Procesos; si la empresa ya está madura: Calidad).
+  //        Las demás áreas por debajo de la mitad (<50 %) entran en el plan como refuerzo.
+  // PRECIO: lo decide, sobre todo, la CANTIDAD DE EMPLEADOS. Cada rango tiene su franja (desde … hasta) y la empresa
+  //         se ubica dentro de su franja según su "intensidad" (0 = mínimo de la franja, 1 = máximo):
+  //   Intensidad = 70 % brechas del test (cuánto le falta en promedio a sus 5 áreas)
+  //              + 15 % sedes (1 sede = 0 … más de 10 = 1) + 15 % sector (general = 0 … salud/financiero = 1)
+  //   Precio "desde" = mínimo de la franja + (máximo − mínimo) × Intensidad   (redondeado a 500)
+  // SEMANAS: salen del trabajo real: semanas base del servicio × (0.5 + 0.5 × brecha principal)
+  //          × (1 + 0.15 × nº de refuerzos) × tamaño(tiempo) × sedes(tiempo), con tope 'semanasMax'.
   // Todo es editable aquí. Precios orientativos: el valor final se define tras la primera sesión.
   precios: {
-    moneda: 'RD$', minimo: 15000, redondeo: 1000,
-    // Base = precio y semanas para la empresa más pequeña (1 a 10 empleados, 1 sede, sector general, madurez media)
+    moneda: 'RD$', redondeo: 500,
+    semanasMax: 40,              // duración máxima mostrada; planes más largos se dividen en fases
+    peso: { brechas: 0.7, sedes: 0.15, sector: 0.15 },
+    // Semanas base de cada servicio (empresa pequeña, 1 sede)
     base: {
-      'Procesos':        { precio: 15000, semanas: [2, 3] },
-      'Estandarización': { precio: 20000, semanas: [2, 4] },
-      'Calidad':         { precio: 25000, semanas: [3, 5] },
-      'Riesgos':         { precio: 20000, semanas: [2, 4] },
-      'Datos':           { precio: 25000, semanas: [2, 4] }
+      'Procesos':        { semanas: [3, 5] },
+      'Estandarización': { semanas: [3, 6] },
+      'Calidad':         { semanas: [4, 8] },
+      'Riesgos':         { semanas: [3, 6] },
+      'Datos':           { semanas: [3, 6] }
     },
-    // 1. Tamaño (empleados): más personas = más procesos, áreas y entrevistas
+    // 1. Tamaño (empleados): define la FRANJA de precio
     empleados: [
-      { op: '1 a 10',     precio: 1,   tiempo: 1 },
-      { op: '11 a 50',    precio: 2.3, tiempo: 1.5 },
-      { op: '51 a 200',   precio: 4.6, tiempo: 2.2 },
-      { op: '201 a 500',  precio: 8,   tiempo: 3 },
-      { op: 'Más de 500', precio: 12.5, tiempo: 4 }
+      { op: '1 a 10',     desde: 15500,  hasta: 25000,  tiempo: 1 },
+      { op: '11 a 50',    desde: 20000,  hasta: 58000,  tiempo: 1.5 },
+      { op: '51 a 200',   desde: 58000,  hasta: 110000, tiempo: 2.2 },
+      { op: '201 a 500',  desde: 150000, hasta: 180000, tiempo: 3 },
+      { op: 'Más de 500', desde: 180000, hasta: 220000, tiempo: 4 }
     ],
-    // 2. Sedes o sucursales: cada sede replica procesos y suma visitas
+    // 2. Sedes o sucursales: cada sede replica procesos y suma visitas (mueve el precio dentro de la franja)
     sedes: [
-      { op: '1 sede',         precio: 1,    tiempo: 1 },
-      { op: '2 a 3 sedes',    precio: 1.15, tiempo: 1.15 },
-      { op: '4 a 10 sedes',   precio: 1.35, tiempo: 1.3 },
-      { op: 'Más de 10 sedes', precio: 1.6, tiempo: 1.5 }
+      { op: '1 sede',          tiempo: 1 },
+      { op: '2 a 3 sedes',     tiempo: 1.15 },
+      { op: '4 a 10 sedes',    tiempo: 1.3 },
+      { op: 'Más de 10 sedes', tiempo: 1.5 }
     ],
-    // 3. Sector: los regulados exigen más documentación, controles y normativa
+    // 3. Sector: 0 = general … 1 = muy regulado (más documentación, controles y normativa)
     sector: [
-      { op: 'Comercio o servicios',      precio: 1 },
-      { op: 'Educación',                 precio: 1 },
-      { op: 'Manufactura o industria',   precio: 1.1 },
-      { op: 'Logística o transporte',    precio: 1.1 },
-      { op: 'Construcción',              precio: 1.1 },
-      { op: 'Gobierno u ONG',            precio: 1.15 },
-      { op: 'Salud',                     precio: 1.25 },
-      { op: 'Financiero o seguros',      precio: 1.25 },
-      { op: 'Otro',                      precio: 1 }
-    ],
-    // 4. Madurez (puntaje del test): con menos orden hay que construir más desde cero
-    madurez: [
-      { hasta: 34,  precio: 1.2 },
-      { hasta: 59,  precio: 1.1 },
-      { hasta: 79,  precio: 1 },
-      { hasta: 100, precio: 0.9 }
+      { op: 'Comercio o servicios',      peso: 0 },
+      { op: 'Educación',                 peso: 0 },
+      { op: 'Manufactura o industria',   peso: 0.4 },
+      { op: 'Logística o transporte',    peso: 0.4 },
+      { op: 'Construcción',              peso: 0.4 },
+      { op: 'Gobierno u ONG',            peso: 0.6 },
+      { op: 'Salud',                     peso: 1 },
+      { op: 'Financiero o seguros',      peso: 1 },
+      { op: 'Otro',                      peso: 0 }
     ]
   },
 
@@ -1191,18 +1198,24 @@ const one = { op: '', precio: 1, tiempo: 1 };
 function planFor(r) {
   // REGLA: área del servicio = la prioridad; si todo está parejo, Procesos (la base); si está madura, Calidad (auditar y mejorar)
   const dim = r.mode === 'foco' ? r.tied[0] : (r.mode === 'sostener' ? 'Calidad' : 'Procesos');
-  const b = (PR.base || {})[dim]; if (!b) return null;
+  const B = PR.base || {}, b = B[dim]; if (!b) return null;
   const known = prof.every(i => i >= 0);
   const emp = profOf('empleados') || one, sed = profOf('sedes') || one, sec = profOf('sector') || one;
-  const mad = (PR.madurez || []).find(m => r.score <= m.hasta) || { precio: 1 };
-  // FÓRMULA
-  const factor = emp.precio * sed.precio * (sec.precio || 1) * mad.precio;
-  const step = PR.redondeo || 1000;
-  const desde = Math.max(PR.minimo || 0, Math.round(b.precio * factor / step) * step);
-  const ft = (emp.tiempo || 1) * (sed.tiempo || 1);
-  const w0 = Math.max(1, Math.round(b.semanas[0] * ft)), w1 = Math.max(w0 + 1, Math.round(b.semanas[1] * ft));
-  return { dim, servicio: dimService[dim].t, semanas: w0 + ' a ' + w1, desde, known,
-    empleados: emp.op, sedes: sed.op, sector: sec.op, madurez: r.score, factor: Math.round(factor * 100) / 100 };
+  // PRECIO: la franja la decide el número de empleados; la intensidad (brechas, sedes, sector) ubica dentro de la franja
+  const gap = d => (8 - r.raw[d]) / 6;                                 // 0 (área al 100 %) … 1 (área en 0 %)
+  const extras = r.weak.filter(d => d !== dim && B[d]);                // otras áreas por debajo de la mitad
+  const W = PR.peso || { brechas: 0.7, sedes: 0.15, sector: 0.15 };
+  const brechas = dimNames.reduce((s, d) => s + gap(d), 0) / dimNames.length;
+  const sedIdx = Math.max(0, (PR.sedes || []).indexOf(sed)), sedesN = (PR.sedes || []).length > 1 ? sedIdx / (PR.sedes.length - 1) : 0;
+  const intensidad = Math.min(1, Math.max(0, W.brechas * brechas + W.sedes * sedesN + W.sector * (sec.peso || 0)));
+  const lo = emp.desde || 0, hi = emp.hasta || lo, stepR = PR.redondeo || 500;
+  const desde = Math.round((lo + (hi - lo) * intensidad) / stepR) * stepR;
+  const ft = (emp.tiempo || 1) * (sed.tiempo || 1) * (0.5 + 0.5 * gap(dim)) * (1 + 0.15 * extras.length);
+  const maxW = PR.semanasMax || 40;   // tope: más allá se planifica por fases tras la primera sesión
+  const w1 = Math.min(maxW, Math.max(2, Math.round(b.semanas[1] * ft))), w0 = Math.min(w1 - 1, Math.max(1, Math.round(b.semanas[0] * ft)));
+  return { dim, servicio: dimService[dim].t, extras, semanas: w0 + ' a ' + w1, desde, known,
+    empleados: emp.op, sedes: sed.op, sector: sec.op, madurez: r.score,
+    franja: money(lo) + ' a ' + money(hi), intensidad: Math.round(intensidad * 100), brechas: Math.round(brechas * 100) };
 }
 function showPane(id) {
   current = id;
@@ -1264,31 +1277,48 @@ function renderQ(first) {
   const wrap = $('qOpts'); wrap.innerHTML = '';
   wrap.classList.toggle('qopts-2', q.opts.length > 5);   // listas largas (sector) en dos columnas
   $('qKeysTip').hidden = q.type === 'text';
+  $('qNext').hidden = q.type === 'text';                 // las de texto tienen su propio "Continuar"
   if (q.type === 'text') { renderText(q, wrap); return; }
-  q.opts.forEach(o => {
-    const sel = q.sel === o.v;   // al volver atrás se ve lo que ya respondiste
-    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(sel));
-    b.className = 'group flex w-full items-center gap-3 rounded-xl border px-4 py-3.5 text-left text-[14.5px] font-medium text-ink transition-all duration-200 hover:border-brand hover:bg-brand-50 ' + (sel ? 'border-brand bg-brand-50' : 'border-edge bg-white');
-    b.innerHTML = '<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border text-[12px] font-semibold transition-colors group-hover:border-brand group-hover:bg-brand group-hover:text-white ' + (sel ? 'border-brand bg-brand text-white' : 'border-edge bg-surface text-mute') + '">' + o.k + '</span><span>' + o.label + '</span>';
-    // e.detail > 1 = segundo clic de un doble clic: caería sobre la pregunta siguiente y la respondería sola
-    b.addEventListener('click', e => { if (e.detail > 1) return; choose(o.v); });
-    wrap.appendChild(b);
-  });
+  paintOpts(q);
   if (!first) qt.focus({ preventScroll: true });
 }
-function choose(v) {
+// Opciones: un clic solo MARCA la respuesta (se puede cambiar); "Siguiente" avanza.
+// Una pregunta nueva aparece sin nada marcado; al volver atrás se ve lo que ya se había respondido.
+function paintOpts(q) {
+  const wrap = $('qOpts'); wrap.innerHTML = '';
+  q.opts.forEach(o => {
+    const sel = q.sel === o.v;
+    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(sel));
+    b.className = 'qopt group flex w-full items-center gap-3 rounded-xl border px-4 py-3.5 text-left text-[14.5px] font-medium text-ink transition-all duration-200 ' + (sel ? 'is-sel border-brand bg-brand-50' : 'border-edge bg-white');
+    b.innerHTML = '<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border text-[12px] font-semibold transition-colors ' + (sel ? 'border-brand bg-brand text-white' : 'border-edge bg-surface text-mute') + '">' + o.k + '</span><span>' + o.label + '</span>';
+    b.addEventListener('click', () => choose(o.v, b));
+    wrap.appendChild(b);
+  });
+  const nx = $('qNext');
+  nx.disabled = !q.sel;
+  nx.textContent = step === TOTAL - 1 ? 'Ver mi resultado' : 'Siguiente';
+}
+function choose(v, btn) {
   if (step < T) return;
   if (step < T + P) prof[step - T] = v - 1; else answers[step - T - P] = v;
+  paintOpts(currentQ());
+  const again = btn ? [...$('qOpts').children][v - 1] : null;
+  if (again) again.focus({ preventScroll: true });
+}
+function quizNext() {
+  if (step < T || !currentQ().sel) return;
   if (step < TOTAL - 1) { step++; renderQ(); } else finish();
 }
+$('qNext').addEventListener('click', quizNext);
 function quizBack() { if (step > 0) { step--; renderQ(); focusStep(); } }
 
-// Atajos numéricos (según las opciones de la pregunta) y ← solo activos con el foco dentro del diagnóstico (WCAG 2.1.4).
+// Teclado (solo con el foco dentro del diagnóstico, WCAG 2.1.4): números marcan una opción, Enter avanza, ← vuelve.
 // En las preguntas de texto no hay atajos: el visitante está escribiendo.
 diagModal.addEventListener('keydown', e => {
   if (current !== 'dQuestion' || e.repeat || step < T) return;   // tecla sostenida: no saltar preguntas
   const n = parseInt(e.key, 10);
   if (n >= 1 && n <= currentQ().opts.length && !e.ctrlKey && !e.metaKey && !e.altKey) choose(n);
+  else if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') { e.preventDefault(); quizNext(); }   // en un botón, Enter ya hace su clic
   else if (e.key === 'ArrowLeft') { e.preventDefault(); quizBack(); }
 });
 
@@ -1374,8 +1404,9 @@ function showResult() {
     $('rPlanTime').textContent = pl.semanas + ' semanas';
     $('rPlanPrice').textContent = 'Desde ' + money(pl.desde);
     $('rPlanNote').textContent = (r.mode === 'foco' ? '' : 'Servicio sugerido: ' + pl.servicio + '. ') +
-      (pl.known ? 'Calculado para tu empresa: ' + pl.empleados + ' empleados · ' + pl.sedes + ' · ' + pl.sector + ' · madurez ' + pl.madurez + '/100.'
-                : 'Precio para empresas pequeñas; varía según el tamaño de tu empresa.') +
+      (pl.extras.length ? 'Incluye refuerzo en ' + joinList(pl.extras) + '. ' : '') +
+      (pl.known ? 'Para empresas de ' + pl.empleados.replace(/^M/, 'm') + ' empleados la inversión va de ' + pl.franja + '; tu precio se ubica según lo que le falta a tu operación, tus sedes y tu sector.'
+                : 'El precio depende del tamaño de tu empresa.') +
       ' Inversión orientativa: el valor final se define tras la primera sesión de levantamiento.';
   }
 
@@ -1401,7 +1432,7 @@ function resultMsg() {
   const pl = planFor(r);
   const quien = (lead && lead.name ? '\nNombre: ' + lead.name + (lead.company ? ' (' + lead.company + ')' : '') : '') +
     (pl && pl.known ? '\nEmpresa: ' + pl.empleados + ' empleados · ' + pl.sedes + ' · ' + pl.sector : '');
-  const plan = pl ? '\nServicio sugerido: ' + pl.servicio + ' (' + pl.semanas + ' semanas, desde ' + money(pl.desde) + ').' : '';
+  const plan = pl ? '\nPlan sugerido: ' + pl.servicio + (pl.extras.length ? ' + refuerzo en ' + joinList(pl.extras) : '') + ' (' + pl.semanas + ' semanas, desde ' + money(pl.desde) + ').' : '';
   return 'Hola Luis, hice el Diagnóstico Express.' + quien +
     '\n\nResultado: ' + r.name + ' (' + r.score + '/100).\n' + area + '\nPrioridad sugerida: ' + r.prio.t + '.' + plan + '\n\nMe gustaría conversar sobre esto.';
 }
@@ -1437,7 +1468,8 @@ function sendResult() {
     puntaje: r.score, nivel: r.name,
     prioridad: r.mode === 'foco' ? r.tied.join(', ') : r.prio.t,
     servicio: pl ? pl.servicio : '', duracion: pl ? pl.semanas + ' semanas' : '', precio_desde: pl ? money(pl.desde) : '',
-    calculo: pl ? 'Base ' + money(PR.base[pl.dim].precio) + ' × factor ' + pl.factor + ' (tamaño, sedes, sector y madurez)' : '',
+    refuerzos: pl ? pl.extras.join(', ') : '',
+    calculo: pl ? 'Franja ' + pl.franja + ' (' + pl.empleados + ' empleados) · intensidad ' + pl.intensidad + ' % (brechas ' + pl.brechas + ' %, sedes, sector)' : '',
     areas: dimNames.map(dn => dn + ' ' + Math.round((r.raw[dn] - 2) / 6 * 100) + '%').join(' · '),
     respuestas: questions.map((q, i) => (i + 1) + '. ' + q.text + ' → ' + options[answers[i] - 1].label).join('\n')
   });
