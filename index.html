@@ -183,7 +183,17 @@ h1,h2{text-wrap:balance}
 /* ---------- "Sobre mí" con formato de perfil profesional ----------
    Portada con formas planas, foto circular que la monta, titular, botones y secciones separadas por líneas finas. */
 .li-card{max-width:56rem;margin:0 auto;background:#fff;border:1px solid #E3E8EE;border-radius:20px;overflow:hidden;box-shadow:0 16px 40px -28px rgba(14,33,56,.35)}
-.li-cover{height:150px;background:#0E2138;position:relative}
+.li-cover{height:190px;background:#0E2138;position:relative}
+/* Diagrama del ciclo de trabajo en la portada de la tarjeta (a la derecha, lejos de la foto) */
+.li-flow{position:absolute;right:24px;top:10px;height:170px;width:443px}
+.li-flow-arc path{fill:none;stroke:#fff;stroke-opacity:.45;stroke-width:1.6;stroke-dasharray:5 5}
+.li-flow-tip path{fill:#fff;fill-opacity:.6}
+.li-flow-tip-main path{fill-opacity:1}
+.li-flow-line{stroke:#fff;stroke-width:2}
+.li-flow-start{fill:#0E2138;stroke:#fff;stroke-width:2.5}
+.dark .li-flow-start{fill:#16304C}
+.li-flow-dot circle{fill:#fff}
+.li-flow-lbl text{fill:#fff;fill-opacity:.85;font-size:20px;font-weight:600;text-anchor:middle;font-family:Inter,system-ui,sans-serif}
 .li-head{position:relative;display:flow-root;padding:0 28px 24px}
 .li-avatar{width:148px;height:148px;margin-top:-82px;border-radius:9999px;border:5px solid #fff;background:#EDF7F8;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
 .li-avatar img{width:100%;height:100%;object-fit:cover}
@@ -213,6 +223,8 @@ h1,h2{text-wrap:balance}
 .li-chip{border:1px solid #E3E8EE;background:#fff;border-radius:9999px;padding:5px 12px;font-size:13px;font-weight:500;color:#0B1F33}
 @media (max-width:639px){
   .li-cover{height:110px}
+  .li-flow{right:14px;top:8px;height:96px;width:250px}
+  .li-flow-lbl{display:none}
   .li-head{padding:0 18px 20px}
   .li-avatar{width:112px;height:112px;margin-top:-60px;border-width:4px}
   .li-actions{position:static;justify-content:flex-start;margin-top:14px;order:5}
@@ -547,7 +559,22 @@ h1,h2{text-wrap:balance}
     </div>
     <!-- Tarjeta con formato de perfil profesional (portada, foto, titular, secciones). Estilo propio, colores de la marca -->
     <article class="li-card" aria-labelledby="aboutName">
-      <div class="li-cover" aria-hidden="true"></div>
+      <div class="li-cover" aria-hidden="true">
+        <!-- Ciclo de trabajo: línea de etapas con arcos de retorno a diseño (vector propio, colores planos) -->
+        <svg class="li-flow" viewBox="-70 0 730 280" preserveAspectRatio="xMaxYMid meet" focusable="false">
+          <g class="li-flow-arc">
+            <path d="M300 235A75 75 0 0 0 150 235"/>
+            <path d="M450 235A150 150 0 0 0 150 235"/>
+            <path d="M600 235A225 225 0 0 0 150 235"/>
+          </g>
+          <g class="li-flow-tip"><path d="M221 160l8-5v10z"/><path d="M296 85l8-5v10z"/><path d="M371 10l8-5v10z"/></g>
+          <path class="li-flow-line" d="M6 235H600"/>
+          <g class="li-flow-tip li-flow-tip-main"><path d="M71 230l9 5-9 5z"/><path d="M221 230l9 5-9 5z"/><path d="M371 230l9 5-9 5z"/><path d="M521 230l9 5-9 5z"/></g>
+          <circle class="li-flow-start" cx="0" cy="235" r="6"/>
+          <g class="li-flow-dot"><circle cx="150" cy="235" r="6.5"/><circle cx="300" cy="235" r="6.5"/><circle cx="450" cy="235" r="6.5"/><circle cx="600" cy="235" r="6.5"/></g>
+          <g class="li-flow-lbl"><text x="0" y="270">planificación</text><text x="150" y="270">diseño</text><text x="300" y="270">evaluación</text><text x="450" y="270">implementación</text><text x="600" y="270">monitoreo</text></g>
+        </svg>
+      </div>
       <div class="li-head">
         <div class="li-avatar">
           <img id="aboutImg" hidden alt="Retrato de Luis Núñez" loading="lazy" />
