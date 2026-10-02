@@ -162,6 +162,12 @@
    pegado tras tocar y hacía parecer marcada la opción de la pregunta siguiente que cae en el mismo sitio. */
 @media (hover:hover){.qopt:not(.is-sel):hover{border-color:#0E7C86;background-color:#EDF7F8}.dark .qopt:not(.is-sel):hover{background-color:#12333A}}
 
+/* Botón principal de la portada: flota suave y lento, solo sube y baja (se detiene al pasar el ratón) */
+.cta-float{animation:cta-float 4s ease-in-out infinite;will-change:transform}
+.cta-float:hover,.cta-float:focus-visible{animation-play-state:paused}
+@keyframes cta-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){.cta-float{animation:none}}
+
 /* Títulos con líneas equilibradas (evita una palabra sola en la última línea) */
 h1,h2{text-wrap:balance}
 
@@ -345,10 +351,9 @@ h1,h2{text-wrap:balance}
     </p>
 
     <div class="hero-in hero-d3 mt-9 flex flex-wrap items-center justify-center gap-3">
-      <button type="button" data-open-diag class="group inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-[14px] font-semibold text-white transition-colors duration-200 hover:bg-brand-dark">
+      <button type="button" data-open-diag class="cta-float group inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-[14px] font-semibold text-white transition-colors duration-200 hover:bg-brand-dark">
         Hacer el diagnóstico express
-        <svg class="ico h-4 w-4 transition-transform duration-300 ease-soft group-hover:translate-x-0.5"><use href="#i-arrow"/></svg>
-      </button>
+        <svg class="ico h-4 w-4 transition-transform duration-300 ease-soft group-hover:translate-x-0.5"><use href="#i-arrow"/></svg>      </button>
       <a href="#servicios" class="inline-flex items-center rounded-lg border border-edge bg-white px-5 py-3 text-[14px] font-semibold text-ink transition-colors duration-200 hover:bg-surface">
         Ver servicios
       </a>
