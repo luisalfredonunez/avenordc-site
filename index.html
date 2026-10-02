@@ -13,7 +13,8 @@
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="es_DO" />
 <meta property="og:site_name" content="Luis Núñez · Consultoría de Procesos" />
-<meta property="og:title" content="Organizo tu empresa para que opere con calidad y control" />
+<meta property="og:title" content="Consultoría en estructuración corporativa y control operativo para PyMEs" />
+<meta name="twitter:title" content="Consultoría en estructuración corporativa y control operativo para PyMEs" />
 <meta property="og:description" content="Procesos claros, riesgos bajo control y decisiones con datos. Haz el diagnóstico express gratis." />
 <meta name="twitter:card" content="summary_large_image" />
 <!-- Dominio: avenordc.com. Sube og-image.png a la misma carpeta que este index.html (public_html). -->
@@ -86,11 +87,19 @@
   #servicios article>.mt-5{margin-top:1rem}
   #sobre-mi .aspect-square{max-width:200px}
   #sobre-mi .grid{gap:1.75rem}
+  #aboutStats{grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+  #aboutStats>div{padding:.85rem .75rem}
+  #aboutStats .text-3xl{font-size:1.5rem;line-height:2rem}
+  #aboutStats p{font-size:12px;line-height:1.35}
   #diagnostico .rounded-3xl{padding:1.5rem;gap:2rem}
   #contacto .grid{gap:2rem}
   #contacto .rounded-2xl.p-6{padding:1.25rem}
 }
 @media (max-width:379px){.nav-logo{height:32px}}
+/* LinkedIn en el encabezado: en el móvil no cabe junto a los demás botones; ahí va dentro del menú */
+@media (max-width:639px){.nav-li{display:none!important}}
+/* Botón de LinkedIn bajo la foto: tamaño natural (no estirado al ancho de la columna) */
+.about-li{width:max-content}
 
 /* ---------- Escena arriba al centro de Servicios: persona apagando un fuego con manguera ----------
    SVG + CSS en grises tenues de la página. La llama titila y el agua corre hacia ella;
@@ -256,6 +265,7 @@ h1,h2{text-wrap:balance}
       </nav>
 
       <div class="flex items-center gap-2">
+        <a data-ch="linkedin" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Mi perfil de LinkedIn" title="Mi perfil de LinkedIn" class="nav-li icon-link flex h-9 w-9 items-center justify-center rounded-lg border border-edge text-ink transition-colors hover:bg-surface hover:text-brand"><svg class="ico"><use href="#i-in"/></svg></a>
         <button type="button" id="themeBtn" class="flex h-9 w-9 items-center justify-center rounded-lg border border-edge text-ink transition-colors hover:bg-surface" aria-label="Activar modo oscuro" aria-pressed="false" title="Modo oscuro">
           <svg class="ico theme-moon"><use href="#i-moon"/></svg><svg class="ico theme-sun"><use href="#i-sun"/></svg>
         </button>
@@ -275,6 +285,7 @@ h1,h2{text-wrap:balance}
       <a data-nav="about" hidden href="#sobre-mi" class="rounded-lg px-3 py-3 hover:bg-surface">Sobre mí</a>
       <a href="#diagnostico" class="rounded-lg px-3 py-3 hover:bg-surface">Diagnóstico</a>
       <a href="#contacto" class="rounded-lg px-3 py-3 hover:bg-surface">Contacto</a>
+      <a data-ch="linkedin" hidden href="#" target="_blank" rel="noopener noreferrer" class="icon-link flex items-center gap-2 rounded-lg px-3 py-3 hover:bg-surface"><svg class="ico h-[18px] w-[18px] text-brand"><use href="#i-in"/></svg>Mi perfil de LinkedIn</a>
     </nav>
   </div>
 </header>
@@ -484,6 +495,9 @@ h1,h2{text-wrap:balance}
           <img id="aboutImg" hidden alt="Retrato de Luis Núñez" loading="lazy" class="h-full w-full object-cover" />
           <span id="aboutMono" class="flex h-full w-full items-center justify-center text-6xl font-semibold text-brand" aria-hidden="true">LN</span>
         </div>
+        <a data-ch="linkedin" hidden href="#" target="_blank" rel="noopener noreferrer" class="about-li icon-link mt-4 inline-flex items-center gap-2 rounded-lg border border-edge bg-white px-4 py-2.5 text-[14px] font-semibold text-ink transition-colors hover:bg-surface">
+          <svg class="ico h-[18px] w-[18px] text-brand"><use href="#i-in"/></svg>Ver mi perfil profesional
+        </a>
       </div>
       <div class="lg:col-span-8">
         <span class="inline-block rounded-full border border-edge bg-white px-3 py-1 text-[12px] font-medium text-mute">Sobre mí</span>
@@ -788,7 +802,7 @@ const CONFIG = {
   // ---- CONTACTO Y REDES (déjalos vacíos hasta tenerlos) ----
   whatsapp:  '18296216151',   // solo dígitos con código de país. Ej: '18091234567'
   correo:    '',   // Ej: 'luis@tudominio.com'
-  linkedin:  '',   // Ej: 'https://www.linkedin.com/in/tu-usuario'
+  linkedin:  'https://www.linkedin.com/in/luisnunez09',   // Ej: 'https://www.linkedin.com/in/tu-usuario'
   instagram: '',   // Ej: 'https://www.instagram.com/tu_usuario'
   tiktok:    '',   // Ej: 'https://www.tiktok.com/@tu_usuario'
   agenda:    '',   // Opcional: enlace de Calendly / Google Calendar
@@ -856,9 +870,13 @@ const CONFIG = {
 
   // ---- SOBRE MÍ (opcional; si 'texto' está vacío, la sección se oculta) ----
   sobreMi: {
-    texto: 'Consultor en gestión de procesos, riesgos y ciencia de datos. Ayudo a empresas pequeñas, medianas y grandes a documentar y estandarizar cómo trabajan, operar con calidad, controlar sus riesgos y convertir sus datos en tableros e indicadores que guían las decisiones.\n\nMi enfoque es práctico: primero entiendo tu operación, luego la ordeno y te entrego resultados concretos por etapas.',   // Separa párrafos con una línea en blanco
-    credenciales: [],   // Ej: ['ISO 9001', 'Gestión de riesgos', 'PMO']
-    stats: [],          // Ej: [{ valor: '10+', etiqueta: 'años de experiencia' }]
+    texto: 'Soy ingeniero en Ciencia de Datos con más de 8 años de experiencia en gestión de riesgos, calidad y mejora de procesos, con foco en el cumplimiento normativo y en decisiones basadas en datos.\n\nHe sido Coordinador de Riesgos Institucionales, Analista Senior de Calidad y Analista de Estadística e Investigación: diseñé modelos de valoración de riesgos, lideré auditorías internas bajo ISO 9001, automaticé procesos y diseñé indicadores de cumplimiento.\n\nHoy llevo esa experiencia a empresas que quieren ordenar su operación, controlar sus riesgos y medir lo que importa.',   // Separa párrafos con una línea en blanco
+    credenciales: ['Auditor Interno ISO 9001:2015', 'ISO 37301 Compliance', 'Operational Risk Manager (OpRM)', 'Lean Six Sigma', 'Riesgos LAFT/PLD', 'Scrum Master', 'Big Data y Análisis de Datos', 'Power BI', 'SQL Server', 'Power Platform', 'R'],
+    stats: [
+      { valor: '8+', etiqueta: 'años de experiencia' },
+      { valor: '2', etiqueta: 'normas ISO como auditor certificado' },
+      { valor: '7+', etiqueta: 'certificaciones profesionales' }
+    ],
     foto: FOTO_LUIS     // Ej: 'foto-luis.jpg' (si está vacío se muestran las iniciales)
   },
 
